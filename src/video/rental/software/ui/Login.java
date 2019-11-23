@@ -6,13 +6,16 @@
 package video.rental.software.ui;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author anjana sree
  */
 public class Login extends javax.swing.JFrame {
-
+   private static javax.swing.JFrame jFrameLogin;
     /**
      * Creates new form LOGINFRAME
      */
@@ -86,6 +89,8 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(47, 103, 235));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/images.png"))); // NOI18N
         jLabel4.setText("         Video Rental Software");
+        jLabel4.setMaximumSize(null);
+        jLabel4.setMinimumSize(null);
         jLabel4.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -93,9 +98,10 @@ public class Login extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -112,8 +118,7 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(715, 715, 715)
                         .addComponent(loginbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(699, Short.MAX_VALUE))
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(599, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,11 +130,11 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65)
                 .addComponent(loginbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
+                .addGap(87, 87, 87)
                 .addComponent(jLabel3)
                 .addGap(48, 48, 48))
         );
@@ -138,13 +143,16 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
@@ -152,15 +160,18 @@ public class Login extends javax.swing.JFrame {
 
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         // TODO add your handling code here:
-        
-        
-            Login frm1=new Login(); 
-            Home frm2=new Home ();
-            frm2.setVisible(true);
-            frm1.setVisible(false); 
-            frm1.setDefaultCloseOperation(frm1.DISPOSE_ON_CLOSE); 
-        
-        
+        if (jTextField1.getText().toString().equalsIgnoreCase("Anjana")
+            && jPasswordField1.getText().toString().equalsIgnoreCase("123456")) {                    
+            JFrame frm2 = new Home();       
+            frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));       
+            frm2.setSize(1800, 800);
+            frm2.setVisible(true);           
+            jFrameLogin.dispose();
+          
+        } else {
+            JOptionPane.showMessageDialog(null, "      Invalid User Name or Password     ");
+        }
+
     }//GEN-LAST:event_loginbuttonActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -201,13 +212,14 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 javax.swing.JPanel panel = new javax.swing.JPanel();
-                panel.setPreferredSize(new Dimension(1800, 700));
-                javax.swing.JFrame f = new Login();
-                f.add(panel);
-                f.pack();
-                f.setMaximumSize(new Dimension(1800, 700));                         
-                f.setResizable(false);
-                f.setVisible(true);
+                panel.setPreferredSize(new Dimension(1700, 700));
+                jFrameLogin = new Login();
+                jFrameLogin.add(panel);
+                jFrameLogin.pack();
+                jFrameLogin.setMaximumSize(new Dimension(1700, 700));                         
+                jFrameLogin.setResizable(false);
+                jFrameLogin.setVisible(true);
+                            
             }
         });
     }
