@@ -34,7 +34,7 @@ public class SqlConnection {
         return connection;
     }
 
-    public static void closeConnection() throws SQLException {
+    public static void closeConnection(Connection connection) throws SQLException {
         logger.log(Level.INFO, "Closing connection{0}", connection);
         if (null != connection) {
             connection.close();
