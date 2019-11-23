@@ -196,7 +196,7 @@ public class Home extends javax.swing.JFrame {
         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
         frm2.setSize(1800, 800);
         frm2.setVisible(true);
-        jFrameHome.setVisible(true); 
+        jFrameHome.setVisible(false); 
         jFrameHome.dispose();
     }//GEN-LAST:event_JButtonUserActionPerformed
 
