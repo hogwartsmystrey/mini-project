@@ -7,8 +7,12 @@ package video.rental.software.ui;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import video.rental.software.dao.CustomerDao;
+import video.rental.software.model.Customer;
 
 /**
  *
@@ -16,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class User extends javax.swing.JFrame {
      private static JFrame jFrameUser;
+     private CustomerDao customerDao = new CustomerDao();
 
     /**
      * Creates new form USERADD
@@ -307,7 +312,24 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButtonFetchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFetchActionPerformed
-        // TODO add your handling code here:
+       
+ System.out.println("**************Called ************");
+        String mobileNumber = jTextField1.getText();
+        if(mobileNumber !=null && !mobileNumber.trim().equals("")){
+            try {
+                Customer customer=customerDao.findCustomerByMobileNumber(mobileNumber);
+                jTextField2.setText(customer.getCustomerId().toString());
+                jTextField3.setText(customer.getCustomerName());
+                jTextField4.setText(customer.getEmailId());
+                jTextField5.setText(customer.getIdNumber());
+                jTextField6.setText(customer.getIdType().toString());
+                jTextField7.setText(customer.getAddress());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }else{
+             JOptionPane.showMessageDialog(null, "No customer exist with the Mobile Number");
+        }
     }//GEN-LAST:event_jButtonFetchActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
