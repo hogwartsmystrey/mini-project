@@ -72,9 +72,10 @@ private VideoDao videoDao = new VideoDao();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 153, 255));
+        setPreferredSize(new java.awt.Dimension(1700, 710));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(886, 132));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1700, 132));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 255));
@@ -88,7 +89,7 @@ private VideoDao videoDao = new VideoDao();
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(801, 801, 801)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(812, Short.MAX_VALUE))
+                .addContainerGap(719, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +145,7 @@ private VideoDao videoDao = new VideoDao();
                         .addComponent(jButtonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(754, Short.MAX_VALUE))
+                .addContainerGap(661, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +165,7 @@ private VideoDao videoDao = new VideoDao();
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1793, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -245,11 +246,11 @@ private VideoDao videoDao = new VideoDao();
 
         /* Create and display the form */
          javax.swing.JPanel panel = new javax.swing.JPanel();
-                panel.setPreferredSize(new Dimension(1700, 800));
+                panel.setPreferredSize(new Dimension(1700, 700));
                 jFrameRentOut = new RentOut();
                 jFrameRentOut.add(panel);
                 jFrameRentOut.pack();
-                jFrameRentOut.setMaximumSize(new Dimension(1700, 800));                         
+                jFrameRentOut.setMaximumSize(new Dimension(1700, 700));                         
                 jFrameRentOut.setResizable(false);
                 jFrameRentOut.setVisible(true);
     }
