@@ -9,8 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import video.rental.software.dao.CustomerDao;
 import video.rental.software.dao.VideoDao;
 import video.rental.software.model.Grid;
@@ -34,14 +37,17 @@ public class Db_test {
         CustomerDao customerDao = new CustomerDao();
         VideoDao videodao = new VideoDao();
 
-        Video video = videodao.findVideoById(1L);
-        List<Video> videoList = new ArrayList<>();
-        videoList.add(video);
-        Boolean status = videodao.rentVideo(videoList, 1L);
-        System.out.println("Transaction status is " + status);
+//        Video video = videodao.findVideoById(1L);
+//        List<Video> videoList = new ArrayList<>();
+//        videoList.add(video);
+       // Boolean status = videodao.rentVideo(videoList, 1L);
+        //System.out.println("Transaction status is " + status);
         List<Grid> gridList;
         gridList = videodao.findAllVideoTakenByUser("1");
         System.out.println("Grid List" + gridList.size());
+        //for(Grid grid:gridList){
+        videodao.returnVideo(gridList);
+        
 
 //        customer.setMobileNumber("9551122222");
 //        customer.setEmailId("test@gmail.com");
