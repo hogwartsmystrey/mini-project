@@ -204,7 +204,7 @@ public class VideoDao {
         logger.log(Level.INFO, "Inside findAllVideoTakenByUser {0}", userId);
         List<Grid> gridList = new ArrayList<>();
         Grid grid;
-        String query = "select vd.video_id,vd.video_name,vd.author_name,tx.transaction_id,tx.rent_date,vd.price from video vd,video_transaction tx where vd.video_id=tx.video_id and tx.user_id=? and tx.return_status=0";
+        String query = "select vd.video_id,vd.video_name,vd.author_name,tx.transaction_id,tx.rent_date,vd.price,c.mobile_number,c.customer_name from video vd,video_transaction tx,customer c where vd.video_id=tx.video_id and c.customer_id=tx.user_id and  tx.user_id=? and tx.return_status=0";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, userId);
@@ -219,6 +219,8 @@ public class VideoDao {
                 grid.setTranactionId(String.valueOf(resultSet.getLong("transaction_id")));
                 grid.setRentedDate(resultSet.getDate("rent_date"));
                 grid.setPrice(String.valueOf(resultSet.getFloat("price")));
+                grid.setMobileNumber(String.valueOf(resultSet.getString("mobile_number")));
+                grid.setUserName(resultSet.getString("customer_name"));
                 gridList.add(grid);
             }
         } catch (SQLException ex) {

@@ -35,12 +35,23 @@ public class Home extends javax.swing.JFrame {
     private CustomerDao customerDao=new CustomerDao();
     private VideoDao videoDao= new VideoDao();
     List<Grid> gridList=new ArrayList<>();
-
+    String[]headers = {"Video ID","Video Name","Composer","Customer Name","Tranaction ID","Mobile Number","Price","Rented Date"};
     /**
      * Creates new form HOMEPAGE
      */
     public Home() {
         initComponents();
+        jTableGrid.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Video ID","Video Name","Composer","Customer Name","Tranaction ID","Mobile Number","Price","Rented Date"
+            }
+        ));
     }
 
     /**
@@ -287,11 +298,24 @@ public class Home extends javax.swing.JFrame {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
         DefaultTableModel model = (DefaultTableModel) jTableGrid.getModel();
+        //JScrollPane scroll;
         model.setRowCount(gridList.size());
+        model.setColumnIdentifiers(headers);
+        //scroll = new JScrollPane(jTableGrid);
+        //add(scroll, BorderLayout.CENTER);
+        //setSize(300, 300);
+        //setVisible(true);
         int row = 0;
+        
         for (Grid data : gridList) {
             model.setValueAt(data.getVideoId(), row, 0);
             model.setValueAt(data.getVideoName(), row, 1);
+            model.setValueAt(data.getAuthorName(), row, 2);
+            model.setValueAt(data.getUserName(), row, 3);
+            model.setValueAt(data.getTranactionId(), row, 4);
+            model.setValueAt(data.getMobileNumber(), row, 5);
+            model.setValueAt(data.getPrice(), row, 6);
+            model.setValueAt(data.getRentedDate(), row, 7);
             row++;
         }
         jTableGrid.setModel(model);
@@ -314,7 +338,18 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRentActionPerformed
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
-        // TODO add your handling code here:
+       if (null == gridList || gridList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Search with Mobile number to return a video");
+        } else if(!"Return".equalsIgnoreCase(searchType)) {
+            JOptionPane.showMessageDialog(null, "You have not taken the video for return,Please rent it");
+        }else{
+            JFrame frm2 = new RentOut(gridList);
+            frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+            frm2.setSize(1700, 700);
+            frm2.setVisible(true);
+            jFrameHome.setVisible(false);
+            jFrameHome.dispose();
+        }
     }//GEN-LAST:event_jButtonReturnActionPerformed
 
     /**
