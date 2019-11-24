@@ -6,16 +6,17 @@
 package video.rental.software.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.config.SqlConnection;
-import static video.rental.software.dao.CustomerDao.logger;
-import video.rental.software.model.Customer;
 import video.rental.software.model.Video;
 
 /**
@@ -105,6 +106,66 @@ public class VideoDao {
 
         return videoList;
     }
+
+    public Video createVideo(Video video) throws SQLException {
+        logger.log(Level.INFO, "Inside createCustomer {0}", video);
+        String query = "INSERT INTO video(author_name,quantity,published_year,language,type,price) VALUES (?,?,?,?,?,?)";
+        int numRowsAffected = 0;
+        try {
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, video.getAuthorName());
+            statement.setInt(2, video.getQuantity());
+            statement.setInt(3, video.getPublishedYear());
+            statement.setLong(4, video.getVideoType());
+            statement.setFloat(5, video.getPrice());
+
+            numRowsAffected = statement.executeUpdate();
+            logger.log(Level.INFO, "No records created {0}", numRowsAffected);
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    video.setVideoId(rs.getLong(1));
+                }
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, null, s);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+
+        return video;
+    }
+
+    public boolean rentVideo(List<Video> videoList, Long userId) throws SQLException {
+        String sqlQuery = "insert into video_tranaction values (?,?,?,?)";
+        Boolean status = false;
+        try {
+            statement = connection.prepareStatement(sqlQuery);
+
+            for (Video video : videoList) {
+                statement.setLong(1, video.getVideoId());
+                statement.setLong(2, userId);
+                statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+                statement.setBoolean(4, false);
+            }
+            int[] result = statement.executeBatch();
+            logger.log(Level.INFO, "The number of rows inserted:{0}", result.length);
+            status = true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, null, e);
+
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+        }
+        return status;
+    }
     
-        
 }

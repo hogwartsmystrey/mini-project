@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.dao.CustomerDao;
@@ -31,9 +32,17 @@ public class Db_test {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         CustomerDao customerDao = new CustomerDao();
-        Customer customer;
-        customer = customerDao.findCustomerByMobileNumber("8553279616");
-        System.out.println("Customer details"+customer);
+        Customer customer= new Customer();
+        
+        customer = customerDao.findCustomerByMobileNumber("55");
+        
+        
+        customer.setMobileNumber("9551122222");
+        customer.setEmailId("test@gmail.com");
+        customer.setCustomerName("kalpana");
+        //customer = customerDao.createCustomer(customer);
+        System.out.println("Customer created "+customer.getCustomerId());
+        SqlConnection.closeConnection(connection);
 //        try {
 //            statement = connection.prepareStatement(query);
 //            resultSet = statement.executeQuery();
