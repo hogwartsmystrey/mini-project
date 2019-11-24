@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.dao.CustomerDao;
+import video.rental.software.dao.VideoDao;
 import video.rental.software.model.Customer;
+import video.rental.software.model.Video;
 
 /**
  *
@@ -32,16 +34,17 @@ public class Db_test {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         CustomerDao customerDao = new CustomerDao();
+        VideoDao videodao = new VideoDao();
         Customer customer= new Customer();
         
-        customer = customerDao.findCustomerByMobileNumber("55");
+        List<Video> videoList = videodao.findAllVideoByName("he");
+        System.out.println("Video List"+videoList.size());
         
-        
-        customer.setMobileNumber("9551122222");
-        customer.setEmailId("test@gmail.com");
-        customer.setCustomerName("kalpana");
-        //customer = customerDao.createCustomer(customer);
-        System.out.println("Customer created "+customer.getCustomerId());
+//        customer.setMobileNumber("9551122222");
+//        customer.setEmailId("test@gmail.com");
+//        customer.setCustomerName("kalpana");
+//        //customer = customerDao.createCustomer(customer);
+//        System.out.println("Customer created "+customer.getCustomerId());
         SqlConnection.closeConnection(connection);
 //        try {
 //            statement = connection.prepareStatement(query);

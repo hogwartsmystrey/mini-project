@@ -9,6 +9,6 @@ package video.rental.software.model;
  *
  * @author anjana sree
  */
-public class video_account {
+public class VideoLanguage {
     
 }

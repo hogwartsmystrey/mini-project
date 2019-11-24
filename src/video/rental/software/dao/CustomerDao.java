@@ -7,7 +7,6 @@ package video.rental.software.dao;
 
 import com.mysql.cj.util.StringUtils;
 import java.sql.Connection;
-import static java.sql.JDBCType.NULL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

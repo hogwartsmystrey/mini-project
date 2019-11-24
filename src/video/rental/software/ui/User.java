@@ -56,8 +56,6 @@ public class User extends javax.swing.JFrame {
         jButtonFetch = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(1700, 700));
-
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
@@ -242,8 +240,6 @@ public class User extends javax.swing.JFrame {
                     .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
-
-        jButtonSave.getAccessibleContext().setAccessibleName("Save");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

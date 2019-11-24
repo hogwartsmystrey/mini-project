@@ -21,8 +21,10 @@ CREATE TABLE `customer` (
 
 
 
+
 CREATE TABLE `video` (
-  `video_id` int(11) NOT NULL ,
+  `video_id` int(11) NOT NULL  AUTO_INCREMENT,
+  `video_name` varchar(65) NOT NULL ,
   `author_name` varchar(65) NOT NULL,
   `quantity` integer NOT NULL,
   `published_year` integer DEFAULT NULL,
@@ -63,6 +65,10 @@ ADD UNIQUE INDEX `mobile_number_UNIQUE` (`mobile_number` ASC) VISIBLE;
 
 ALTER TABLE `video_rental`.`video_transaction` 
 CHANGE COLUMN `rent_date` `rent_date` DATE NOT NULL ;
+
+ALTER TABLE video MODIFY COLUMN video_name VARCHAR(255) CHARACTER  SET UTF8 COLLATE UTF8_GENERAL_CI;
+
+
   
 
 

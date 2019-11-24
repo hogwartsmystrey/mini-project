@@ -13,22 +13,31 @@ import java.util.List;
  * @author vimal
  */
 public class DashBoard {
-    
+
     private int type;
-    private List<Customer> customerList;
+    private String mobileNumber;
+    private List<VideoTranaction> transactionList;
     private List<Video> videoList;
 
     public DashBoard() {
-        this.customerList = new ArrayList<>();
+        this.transactionList = new ArrayList<>();
         this.videoList = new ArrayList<>();
     }
 
-    public List<Customer> getCustomerList() {
-        return customerList;
+    public List<VideoTranaction> getTransactionList() {
+        return transactionList;
     }
 
     public List<Video> getVideoList() {
         return videoList;
-    } 
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
 }

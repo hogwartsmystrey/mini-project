@@ -6,7 +6,6 @@
 package video.rental.software.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.config.SqlConnection;
+import video.rental.software.model.Grid;
 import video.rental.software.model.Video;
+import video.rental.software.model.VideoTranaction;
 
 /**
  *
@@ -76,7 +77,8 @@ public class VideoDao {
         Video video;
         StringBuilder queryParam = new StringBuilder();
         queryParam.append("%").append(videoName).append("%");
-        String query = "select * from video vd where vd.video_name like ?";
+        //queryParam.append(videoName);
+        String query = "select * from video vd where vd.video_name COLLATE UTF8_GENERAL_CI LIKE ?";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, queryParam.toString());
@@ -85,11 +87,12 @@ public class VideoDao {
             while (resultSet.next()) {
                 video = new Video();
                 video.setVideoId(resultSet.getLong("video_id"));
+                video.setVideoName(resultSet.getString("video_name"));
                 video.setAuthorName(resultSet.getString("author_name"));
                 video.setQuantity(resultSet.getInt("quantity"));
                 video.setPublishedYear(resultSet.getInt("published_year"));
                 video.setLanguage(resultSet.getString("language"));
-                video.setVideoType(resultSet.getLong("video_type"));
+                video.setVideoType(resultSet.getLong("type"));
                 video.setPrice(resultSet.getFloat("price"));
                 videoList.add(video);
             }
@@ -103,7 +106,7 @@ public class VideoDao {
                 resultSet.close();
             }
         }
-
+        logger.log(Level.INFO, "Video List count {0}", videoList);
         return videoList;
     }
 
@@ -166,6 +169,44 @@ public class VideoDao {
             }
         }
         return status;
+    }
+    
+    
+    public List<Grid> findAllVideoTakenByUser(String mobileNumber) throws SQLException {
+        //logger.log(Level.INFO, "Inside findVideoByName {0}", videoName);
+        List<Video> videoList = new ArrayList<>();
+        Video video;
+        //queryParam.append(videoName);
+        String query = "select * from  vd where vd.video_name COLLATE UTF8_GENERAL_CI LIKE ?";
+        try {
+            statement = connection.prepareStatement(query);
+          //  statement.setString(1, queryParam.toString());
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                video = new Video();
+                video.setVideoId(resultSet.getLong("video_id"));
+                video.setVideoName(resultSet.getString("video_name"));
+                video.setAuthorName(resultSet.getString("author_name"));
+                video.setQuantity(resultSet.getInt("quantity"));
+                video.setPublishedYear(resultSet.getInt("published_year"));
+                video.setLanguage(resultSet.getString("language"));
+                video.setVideoType(resultSet.getLong("type"));
+                video.setPrice(resultSet.getFloat("price"));
+                videoList.add(video);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VideoDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+        logger.log(Level.INFO, "Video List count {0}", videoList);
+        return null;
     }
     
 }
