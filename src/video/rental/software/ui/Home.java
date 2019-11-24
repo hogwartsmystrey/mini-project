@@ -273,8 +273,8 @@ public class Home extends javax.swing.JFrame {
         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
         frm2.setSize(1800, 800);
         frm2.setVisible(true);
-        jFrameHome.setVisible(false); 
-        jFrameHome.dispose();
+        this.setVisible(false); 
+        this.dispose();
     }//GEN-LAST:event_JButtonUserActionPerformed
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
@@ -344,8 +344,8 @@ public class Home extends javax.swing.JFrame {
             frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
             frm2.setSize(1700, 700);
             frm2.setVisible(true);
-            jFrameHome.setVisible(false);
-            jFrameHome.dispose();
+            this.setVisible(false);
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonRentActionPerformed
 
@@ -359,8 +359,8 @@ public class Home extends javax.swing.JFrame {
             frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
             frm2.setSize(1700, 700);
             frm2.setVisible(true);
-            jFrameHome.setVisible(false);
-            jFrameHome.dispose();
+            this.setVisible(false);
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonReturnActionPerformed
 

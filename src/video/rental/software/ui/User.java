@@ -305,8 +305,8 @@ public class User extends javax.swing.JFrame {
         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
         frm2.setSize(1700, 700);
         frm2.setVisible(true);
-        jFrameUser.setVisible(false); 
-        jFrameUser.dispose();
+        this.setVisible(false); 
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -363,8 +363,8 @@ public class User extends javax.swing.JFrame {
                         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
                         frm2.setSize(1700, 700);
                         frm2.setVisible(true);
-                        jFrameUser.setVisible(false);
-                        jFrameUser.dispose();
+                        this.setVisible(false);
+                        this.dispose();
                     }else{
                         JOptionPane.showMessageDialog(null, "      User details update failed !     "); 
                     }
@@ -376,8 +376,8 @@ public class User extends javax.swing.JFrame {
                         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
                         frm2.setSize(1700, 700);
                         frm2.setVisible(true);
-                        jFrameUser.setVisible(false);
-                        jFrameUser.dispose();
+                        this.setVisible(false);
+                        this.dispose();
                     }else{
                         JOptionPane.showMessageDialog(null, "      User Creation failed !     "); 
                     }
