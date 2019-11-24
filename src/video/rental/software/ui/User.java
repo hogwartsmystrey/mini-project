@@ -317,7 +317,10 @@ public class User extends javax.swing.JFrame {
         String mobileNumber = jTextField1.getText();
         if(mobileNumber !=null && !mobileNumber.trim().equals("")){
             try {
-                Customer customer=customerDao.findCustomerByMobileNumber(mobileNumber);
+                Customer customer = customerDao.findCustomerByMobileNumber(mobileNumber);
+                if(customer == null){
+                    JOptionPane.showMessageDialog(null, "No customer exist with the Mobile Number");
+                }
                 jTextField2.setText(customer.getCustomerId().toString());
                 jTextField3.setText(customer.getCustomerName());
                 jTextField4.setText(customer.getEmailId());
@@ -328,7 +331,7 @@ public class User extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         }else{
-             JOptionPane.showMessageDialog(null, "No customer exist with the Mobile Number");
+             JOptionPane.showMessageDialog(null, "Enter a valid Mobile Number to fetch");
         }
     }//GEN-LAST:event_jButtonFetchActionPerformed
 
@@ -350,7 +353,7 @@ public class User extends javax.swing.JFrame {
                 customer.setIdType(Long.parseLong(jTextField6.getText()));
                 customer.setAddress(jTextField7.getText());
                 Customer customerExist = customerDao.findCustomerByMobileNumber(mobileNumber);
-                if (customerExist == null) {
+                if (customerExist != null) {
                     customer.setCustomerId(customerExist.getCustomerId());
                     List<String> error = customerDao.updateCustomer(customer);
                     if (!error.isEmpty()) {
