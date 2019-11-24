@@ -109,7 +109,6 @@ public class Home extends javax.swing.JFrame {
 
         JButtonUser.setBackground(new java.awt.Color(255, 255, 255));
         JButtonUser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        JButtonUser.setForeground(new java.awt.Color(51, 153, 255));
         JButtonUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transUser.jpg"))); // NOI18N
         JButtonUser.setText("User");
         JButtonUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -125,7 +124,6 @@ public class Home extends javax.swing.JFrame {
 
         jButtonVideo.setBackground(new java.awt.Color(255, 255, 255));
         jButtonVideo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonVideo.setForeground(new java.awt.Color(51, 153, 255));
         jButtonVideo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transVideo.jpg"))); // NOI18N
         jButtonVideo.setText("Video");
         jButtonVideo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -149,7 +147,6 @@ public class Home extends javax.swing.JFrame {
 
         jButtonSearch.setBackground(new java.awt.Color(255, 255, 255));
         jButtonSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonSearch.setForeground(new java.awt.Color(51, 153, 255));
         jButtonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transSerch.jpg"))); // NOI18N
         jButtonSearch.setText("Search");
         jButtonSearch.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -165,7 +162,6 @@ public class Home extends javax.swing.JFrame {
 
         jButtonRent.setBackground(new java.awt.Color(255, 255, 255));
         jButtonRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonRent.setForeground(new java.awt.Color(51, 153, 255));
         jButtonRent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transRen.jpg"))); // NOI18N
         jButtonRent.setText("Rent");
         jButtonRent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -179,7 +175,6 @@ public class Home extends javax.swing.JFrame {
 
         jButtonReturn.setBackground(new java.awt.Color(255, 255, 255));
         jButtonReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonReturn.setForeground(new java.awt.Color(51, 153, 255));
         jButtonReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transReturn.jpg"))); // NOI18N
         jButtonReturn.setText("Return");
         jButtonReturn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
