@@ -63,6 +63,8 @@ public class User extends javax.swing.JFrame {
         jButtonFetch = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
 
+        jFrame1.setPreferredSize(new java.awt.Dimension(1700, 700));
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
@@ -75,7 +77,6 @@ public class User extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1800, 800));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
