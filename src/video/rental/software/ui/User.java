@@ -357,7 +357,7 @@ public class User extends javax.swing.JFrame {
                 if (customerExist != null) {
                     customer.setCustomerId(customerExist.getCustomerId());
                     List<String> error = customerDao.updateCustomer(customer);
-                    if (!error.isEmpty()) {
+                    if (error.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "      User details update successfully !     ");
                         JFrame frm2 = new Home();
                         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));

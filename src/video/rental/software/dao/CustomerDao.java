@@ -143,18 +143,18 @@ public class CustomerDao {
     }
     
      public List<String> updateCustomer(Customer customer) throws SQLException {
-        logger.log(Level.INFO, "Inside createCustomer {0}", customer);
+        logger.log(Level.INFO, "Inside updateCustomer {0}", customer);
         Customer existingCustomer = findCustomerById(customer.getCustomerId());
         
         List<String>errorList = new ArrayList<>();
-         if (customer.getMobileNumber().equalsIgnoreCase(existingCustomer.getMobileNumber())) {
+         if (!customer.getMobileNumber().equalsIgnoreCase(existingCustomer.getMobileNumber())) {
              if (findCustomerByMobileNumber(customer.getMobileNumber()) != null) {
                  errorList.add("Cannot update Mobile Number as another customer exist");
                  return errorList;
              }
          }
          StringBuilder query = new StringBuilder();
-         query.append("UPDATE customer SET customer_name=?,mobile_number=?,email_id=?,type=?,id_number=?,address=? where customer_id=?");
+         query.append("UPDATE customer SET customer_name=?,mobile_number=?,email_id=?,id_type=?,id_number=?,address=? where customer_id=?");
           try {
          statement = connection.prepareStatement(query.toString());         
             statement.setString(1, customer.getCustomerName());
