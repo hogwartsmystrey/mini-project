@@ -18,10 +18,12 @@ public class DashBoard {
     private String mobileNumber;
     private List<VideoTranaction> transactionList;
     private List<Video> videoList;
+    private List<Grid> gridList;
 
     public DashBoard() {
         this.transactionList = new ArrayList<>();
         this.videoList = new ArrayList<>();
+        this.gridList = new ArrayList<>();
     }
 
     public List<VideoTranaction> getTransactionList() {

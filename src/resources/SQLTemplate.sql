@@ -34,7 +34,7 @@ CREATE TABLE `video` (
   PRIMARY KEY (`video_id`));
   
   CREATE TABLE `video_transaction` (
-  `transaction_id` int(11) NOT NULL ,
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT ,
   `video_id` int(11) NOT NULL ,
   `video_sub_id` varchar(9) NOT NULL,
   `user_id` integer NOT NULL,
@@ -67,6 +67,9 @@ ALTER TABLE `video_rental`.`video_transaction`
 CHANGE COLUMN `rent_date` `rent_date` DATE NOT NULL ;
 
 ALTER TABLE video MODIFY COLUMN video_name VARCHAR(255) CHARACTER  SET UTF8 COLLATE UTF8_GENERAL_CI;
+
+ALTER TABLE `video_rental`.`video_transaction` 
+CHANGE COLUMN `video_sub_id` `video_sub_id` VARCHAR(9) NULL ;
 
 
   

@@ -54,7 +54,7 @@ public class VideoDao {
                 video.setAuthorName(resultSet.getString("author_name"));
                 video.setQuantity(resultSet.getInt("quantity"));
                 video.setLanguage(resultSet.getString("language"));
-                video.setVideoType(resultSet.getLong("video_type"));
+                video.setVideoType(resultSet.getLong("type"));
                 video.setPrice(resultSet.getFloat("price"));
             }
         } catch (SQLException ex) {
@@ -146,7 +146,8 @@ public class VideoDao {
     }
 
     public boolean rentVideo(List<Video> videoList, Long userId) throws SQLException {
-        String sqlQuery = "insert into video_tranaction values (?,?,?,?)";
+        logger.log(Level.INFO, "Inside the rentVideo batch update for user ID {0}", userId);
+        String sqlQuery = "insert into video_transaction(video_id,user_id,rent_date,return_status) values (?,?,?,?)";
         Boolean status = false;
         try {
             statement = connection.prepareStatement(sqlQuery);
@@ -156,6 +157,7 @@ public class VideoDao {
                 statement.setLong(2, userId);
                 statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                 statement.setBoolean(4, false);
+                statement.addBatch();
             }
             int[] result = statement.executeBatch();
             logger.log(Level.INFO, "The number of rows inserted:{0}", result.length);
@@ -172,28 +174,23 @@ public class VideoDao {
     }
     
     
-    public List<Grid> findAllVideoTakenByUser(String mobileNumber) throws SQLException {
-        //logger.log(Level.INFO, "Inside findVideoByName {0}", videoName);
-        List<Video> videoList = new ArrayList<>();
-        Video video;
-        //queryParam.append(videoName);
-        String query = "select * from  vd where vd.video_name COLLATE UTF8_GENERAL_CI LIKE ?";
+    public List<Grid> findAllVideoTakenByUser(String userId) throws SQLException {
+        logger.log(Level.INFO, "Inside findAllVideoTakenByUser {0}", userId);
+        List<Grid> gridList = new ArrayList<>();
+        Grid grid;
+        String query = "select vd.video_id,vd.video_name,vd.author_name from video vd,video_transaction tx where vd.video_id=tx.video_id and tx.user_id=?";
         try {
             statement = connection.prepareStatement(query);
-          //  statement.setString(1, queryParam.toString());
+            statement.setString(1, userId);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                video = new Video();
-                video.setVideoId(resultSet.getLong("video_id"));
-                video.setVideoName(resultSet.getString("video_name"));
-                video.setAuthorName(resultSet.getString("author_name"));
-                video.setQuantity(resultSet.getInt("quantity"));
-                video.setPublishedYear(resultSet.getInt("published_year"));
-                video.setLanguage(resultSet.getString("language"));
-                video.setVideoType(resultSet.getLong("type"));
-                video.setPrice(resultSet.getFloat("price"));
-                videoList.add(video);
+                grid = new Grid();
+                Long videoId = resultSet.getLong("video_id");
+                grid.setVideoId(String.valueOf(videoId));
+                grid.setVideoName(resultSet.getString("video_name"));
+                grid.setAuthorName(resultSet.getString("author_name"));
+                gridList.add(grid);
             }
         } catch (SQLException ex) {
             Logger.getLogger(VideoDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,8 +202,8 @@ public class VideoDao {
                 resultSet.close();
             }
         }
-        logger.log(Level.INFO, "Video List count {0}", videoList);
-        return null;
+        logger.log(Level.INFO, "findAllVideoTakenByUser transaction List ", gridList);
+        return gridList;
     }
     
 }

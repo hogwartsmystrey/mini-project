@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import video.rental.software.dao.CustomerDao;
 import video.rental.software.dao.VideoDao;
+import video.rental.software.model.Customer;
 import video.rental.software.model.DashBoard;
 import video.rental.software.model.Grid;
 import video.rental.software.util.VideoUtil;
@@ -226,16 +227,20 @@ public class Home extends javax.swing.JFrame {
 
             if (!StringUtils.isEmptyOrWhitespaceOnly(searchText)) {
                 if (VideoUtil.checkNumericString(searchText)) {
-
+                    Logger.getLogger(Home.class.getName()).log(Level.INFO,"Inside the Tranasaction search");
+                    Customer customer = customerDao.findCustomerByMobileNumber(searchText);
+                    gridList = videoDao.findAllVideoTakenByUser(customer.getCustomerId().toString());
                 } else {
+                    Logger.getLogger(Home.class.getName()).log(Level.INFO,"Inside the Video search");
                     videoList = videoDao.findAllVideoByName(searchText);
+                    dashboard.getVideoList().clear();
+                    if (null != videoList && !videoList.isEmpty()) {
+                        dashboard.getVideoList().addAll(videoList);
+                    }
+                    gridList = VideoUtil.transformDashBoradToGrid(dashboard);
                 }
             }
-            dashboard.getVideoList().clear();
-            if (null != videoList && !videoList.isEmpty()) {
-                dashboard.getVideoList().addAll(videoList);
-            }
-            gridList = VideoUtil.transformDashBoradToGrid(dashboard);
+
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }

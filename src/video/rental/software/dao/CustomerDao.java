@@ -67,7 +67,7 @@ public class CustomerDao {
                 resultSet.close();
             }
         }
-
+      logger.log(Level.INFO, "Got customer {0}", customer);
         return customer;
     }
 

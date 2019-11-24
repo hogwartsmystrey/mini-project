@@ -35,7 +35,7 @@ public class VideoUtil {
 
     public static boolean checkNumericString(String inputString) {
         try {
-            Integer.parseInt(inputString);
+            Long.parseLong(inputString);
         } catch (Exception e) {
             return false;
         }
