@@ -295,6 +295,13 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRentActionPerformed
         // TODO add your handling code here:
+        JFrame frm2 = new RentOut();
+        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+        frm2.setSize(1700, 700);
+        frm2.setVisible(true);
+        jFrameHome.setVisible(false);
+        jFrameHome.dispose();
+
     }//GEN-LAST:event_jButtonRentActionPerformed
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
