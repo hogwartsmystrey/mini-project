@@ -79,6 +79,7 @@ public class User extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1700, 700));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -196,7 +197,7 @@ public class User extends javax.swing.JFrame {
                     .addComponent(jTextField2)
                     .addComponent(jTextField1)
                     .addComponent(jTextField3)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                     .addComponent(jTextField6)
                     .addComponent(jTextField7))
                 .addGap(55, 55, 55)
@@ -426,11 +427,11 @@ public class User extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 javax.swing.JPanel panel = new javax.swing.JPanel();
-                panel.setPreferredSize(new Dimension(1700, 900));
+                panel.setPreferredSize(new Dimension(1700, 700));
                 jFrameUser = new User();
                 jFrameUser.add(panel);
                 jFrameUser.pack();
-                jFrameUser.setMaximumSize(new Dimension(1700, 800));                         
+                jFrameUser.setMaximumSize(new Dimension(1700, 700));                         
                 jFrameUser.setResizable(false);
                 jFrameUser.setVisible(true);
                

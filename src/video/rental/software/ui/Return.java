@@ -86,6 +86,7 @@ public class Return extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 153, 255));
         setForeground(java.awt.Color.white);
+        setPreferredSize(new java.awt.Dimension(1700, 700));
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
