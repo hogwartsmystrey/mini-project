@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import video.rental.software.dao.CustomerDao;
 import video.rental.software.dao.VideoDao;
@@ -29,6 +30,7 @@ import video.rental.software.util.VideoUtil;
  */
 public class Home extends javax.swing.JFrame {
     private static JFrame jFrameHome;
+    private String searchType;
     private DashBoard dashboard= new DashBoard();
     private CustomerDao customerDao=new CustomerDao();
     private VideoDao videoDao= new VideoDao();
@@ -262,12 +264,14 @@ public class Home extends javax.swing.JFrame {
             if (!StringUtils.isEmptyOrWhitespaceOnly(searchText)) {
                 if (VideoUtil.checkMobileNumber(searchText)) {
                     Logger.getLogger(Home.class.getName()).log(Level.INFO, "Inside the Tranasaction search");
+                    searchType="Return";
                     Customer customer = customerDao.findCustomerByMobileNumber(searchText);
                     if (customer != null) {
                         gridList = videoDao.findAllVideoTakenByUser(customer.getCustomerId().toString());
                     }
                 } else {
                     Logger.getLogger(Home.class.getName()).log(Level.INFO, "Inside the Video search");
+                    searchType="Rent";
                     videoList = videoDao.findAllVideoByName(searchText);
                     if (null != videoList && !videoList.isEmpty()) {
                         dashboard.getVideoList().addAll(videoList);
@@ -295,13 +299,18 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRentActionPerformed
         // TODO add your handling code here:
-        JFrame frm2 = new RentOut();
-        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
-        frm2.setSize(1700, 700);
-        frm2.setVisible(true);
-        jFrameHome.setVisible(false);
-        jFrameHome.dispose();
-
+        if (null == gridList || gridList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Search any videos to rent");
+        } else if(!"Rent".equalsIgnoreCase(searchType)) {
+            JOptionPane.showMessageDialog(null, "User is not allowed to Rent only Return is possible");
+        }else{
+            JFrame frm2 = new RentOut(gridList);
+            frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+            frm2.setSize(1700, 700);
+            frm2.setVisible(true);
+            jFrameHome.setVisible(false);
+            jFrameHome.dispose();
+        }
     }//GEN-LAST:event_jButtonRentActionPerformed
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed

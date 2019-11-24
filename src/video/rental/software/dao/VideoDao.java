@@ -158,15 +158,16 @@ public class VideoDao {
             errorList.add("No Customer exist..Please register to continue");
             return errorList;
         }
-        String sqlQuery = "insert into video_transaction(video_id,user_id,rent_date,return_status) values (?,?,?,?)";
+        String sqlQuery = "insert into video_transaction(video_id,video_sub_id,user_id,rent_date,return_status) values (?,?,?,?,?)";
         try {
             statement = connection.prepareStatement(sqlQuery);
 
             for (Grid grid : gridList) {
                 statement.setLong(1, Long.parseLong(grid.getVideoId()));
-                statement.setLong(2, customer.getCustomerId());
-                statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-                statement.setBoolean(4, false);
+                statement.setLong(2, 1L);
+                statement.setLong(3, customer.getCustomerId());
+                statement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+                statement.setBoolean(5, false);
                 statement.addBatch();
             }
             result = statement.executeBatch();

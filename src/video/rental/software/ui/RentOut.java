@@ -6,7 +6,15 @@
 package video.rental.software.ui;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import video.rental.software.dao.VideoDao;
+import video.rental.software.model.Grid;
 
 /**
  *
@@ -14,11 +22,21 @@ import javax.swing.JFrame;
  */
 public class RentOut extends javax.swing.JFrame {
 private static JFrame jFrameRentOut;
+private VideoDao videoDao = new VideoDao();
+
+   private List<Grid> gridList;
+
+    public RentOut() {
+      
+    }
+   
     /**
      * Creates new form RentOut
      */
-    public RentOut() {
+    public RentOut(List<Grid>grid) {
         initComponents();
+        this.gridList =grid;
+        
     }
 
     /**
@@ -147,6 +165,31 @@ private static JFrame jFrameRentOut;
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
         // TODO add your handling code here:
+        String mobileNumber = jTextField1.getText();
+        List<String> errors = null;
+        if (mobileNumber == null || "".equalsIgnoreCase(mobileNumber.trim())) {
+            JOptionPane.showMessageDialog(null, "Mobile Number has to entered to proceed..");
+            return;
+        }
+        if (null != gridList && !gridList.isEmpty()) {
+            try {
+                errors = videoDao.rentVideo(gridList, mobileNumber);
+            } catch (SQLException ex) {
+                Logger.getLogger(RentOut.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Unable to rent video..");
+                return;
+            }
+            if (null == errors || errors.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Video rent sucessfully..Email and SMS will be triggered to your personal account");
+                JFrame frm2 = new Home();
+                frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+                frm2.setSize(1700, 700);
+                frm2.setVisible(true);
+                jFrameRentOut.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, errors.get(0));
+            }
+        }
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**
