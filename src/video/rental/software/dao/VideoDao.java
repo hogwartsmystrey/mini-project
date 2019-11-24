@@ -340,5 +340,39 @@ public class VideoDao {
         return accountId;
     }
     
+    public List<String> calculatePayment(List<Grid> gridList) {
+        List<String> message = new ArrayList<>();
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        StringBuilder messageBuilder = new StringBuilder();
+        Float totalFees=0F;
+        if (null != gridList && !gridList.isEmpty()) {
+            for(Grid grid : gridList) {
+                long duration = 0;
+                messageBuilder.setLength(0);
+                try {
+                    String hireDate = myFormat.format(grid.getRentedDate());
+                    Date date1 = myFormat.parse(hireDate);
+                    String currentDate = myFormat.format(new Date());
+                    Date date2 = myFormat.parse(currentDate);
+                    long diff = date2.getTime() - date1.getTime();
+                    duration = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Float calcualtedFee = Float.parseFloat(grid.getPrice()) * duration;
+                logger.log(Level.INFO, "Calculate fee for Video {0}", grid.getVideoId());
+                logger.log(Level.INFO, "Calcualted Fee************ ", calcualtedFee);
+                messageBuilder.append("Fee for the video '").append(grid.getVideoName()).append("' with ID '").append(grid.getVideoId()).append("' is ").append(String.valueOf(calcualtedFee)).append(" (").append(grid.getPrice()).append(" * ").append(duration).append(" )");
+                totalFees = totalFees + calcualtedFee;
+                message.add(messageBuilder.toString());
+            }
+            messageBuilder.setLength(0);
+            messageBuilder.append("Total payable amount in cash is RS ").append(totalFees);
+            message.add(messageBuilder.toString());
+        }
+        return message;
+    }
+    
     
 }
