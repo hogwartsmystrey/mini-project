@@ -57,6 +57,8 @@ private VideoDao videoDao = new VideoDao();
         jButtonOk = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
 
+        jFrame1.setPreferredSize(new java.awt.Dimension(1700, 700));
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
