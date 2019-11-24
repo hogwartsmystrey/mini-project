@@ -6,25 +6,62 @@
 package video.rental.software.ui;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.io.IOException;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import video.rental.software.dao.VideoDao;
+import video.rental.software.model.Grid;
 
 /**
  *
  * @author pvr2
  */
 public class Return extends javax.swing.JFrame {
-private static JFrame jFrameReturn;
+    private static JFrame jFrameReturn;
+    private VideoDao videoDao = new VideoDao();
+    private List<Grid> gridList;
+    private Map<String, String> paymentMap = new HashMap<>();
+    String[] headers = {"Video Name","Video ID","Hired Date","Price", "No of Days", "Amount"};
+
+    public Return(List<Grid> grid) {
+        initComponents();
+        this.gridList = grid;
+        paymentMap = videoDao.calculatePayment(gridList);
+        renderJTable();
+    }
     /**
      * Creates new form NewJFrame
      */
     public Return() {
         initComponents();
+        renderJTable();
         
+    }
+    
+    private void renderJTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(gridList.size());
+        model.setColumnIdentifiers(headers);
+        int row = 0;
+        for (Grid grid : gridList) {
+            String[] arr = paymentMap.get(grid.getVideoId()).split(":");
+            model.setValueAt(grid.getVideoName(), row, 0);
+            model.setValueAt(grid.getVideoId(), row, 1);
+            model.setValueAt(grid.getRentedDate(), row, 2);
+            model.setValueAt(grid.getPrice(), row, 3);
+            model.setValueAt(arr[1], row, 4);
+            model.setValueAt(arr[0], row, 5);
+            row++;
+        }
+        jTable1.setModel(model);
+        jLabelTotal.setText(paymentMap.get("Total"));
     }
 
     /**
@@ -135,14 +172,14 @@ private static JFrame jFrameReturn;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(164, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addGap(1060, 1060, 1060))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(172, 172, 172))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,12 +203,12 @@ private static JFrame jFrameReturn;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1700, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -179,11 +216,34 @@ private static JFrame jFrameReturn;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-        // TODO add your handling code here:
+         JFrame frm2 = new Home();
+        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+        frm2.setSize(1700, 700);
+        frm2.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        // TODO add your handling code here:
+        List<String> errorList = null;
+        if (null != gridList && !gridList.isEmpty()) {
+            try {
+                errorList = videoDao.returnVideo(gridList);
+            } catch (SQLException ex) {
+                Logger.getLogger(RentOut.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Unable to return video..");
+                return;
+            }
+            if (null == errorList || errorList.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Payment processed sucessfully");
+                JFrame frm2 = new Home();
+                frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+                frm2.setSize(1700, 700);
+                frm2.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, errorList.get(0));
+            }
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**
