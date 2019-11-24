@@ -6,7 +6,13 @@
 package video.rental.software.ui;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import video.rental.software.dao.VideoDao;
 
 /**
  *
@@ -14,6 +20,7 @@ import javax.swing.JFrame;
  */
 public class Video extends javax.swing.JFrame {
     private static JFrame jFrameVideo;
+    private VideoDao videoDao = new VideoDao();
     /**
      * Creates new form VIDEO
      */
@@ -144,6 +151,11 @@ public class Video extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setForeground(new java.awt.Color(51, 153, 255));
         jButton3.setText("Cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -300,12 +312,83 @@ public class Video extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        String videoId = jTextField1.getText();
+        System.out.println("Video ID"+videoId);
+        if (null != videoId && !"".equalsIgnoreCase(videoId.trim())) {
+            try {
+                video.rental.software.model.Video video = videoDao.findVideoById(Long.valueOf(videoId));
+                 if(video == null){
+                    JOptionPane.showMessageDialog(null, "No video exist with the ID");
+                    return;
+                }
+                jTextField2.setText(video.getVideoName());
+                jTextField3.setText(video.getAuthorName());
+                jTextField4.setText(video.getQuantity().toString());
+                jTextField5.setText(video.getPublishedYear().toString());
+                jTextField6.setText(video.getLanguage());
+                jTextField7.setText(video.getVideoType().toString());
+                jTextField8.setText(video.getPrice().toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Enter a valid Video ID to fetch");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!jTextField2.getText().equalsIgnoreCase("")
+                && !jTextField3.getText().equalsIgnoreCase("")
+                && !jTextField4.getText().equalsIgnoreCase("")
+                && !jTextField5.getText().equalsIgnoreCase("")
+                && !jTextField6.getText().equalsIgnoreCase("")
+                && !jTextField7.getText().equalsIgnoreCase("")
+                && !jTextField8.getText().equalsIgnoreCase("")) {
+
+            video.rental.software.model.Video video = new video.rental.software.model.Video();
+            String videoId = jTextField1.getText();
+            if (videoId != null) {
+                video.setVideoId(Long.getLong(videoId));
+            }
+            video.setVideoName(jTextField2.getText());
+            video.setAuthorName(jTextField3.getText());
+            video.setQuantity(Integer.valueOf(jTextField4.getText()));
+            video.setPublishedYear(Integer.valueOf(jTextField5.getText()));
+            video.setLanguage(jTextField6.getText());
+            video.setVideoType(Long.valueOf(jTextField7.getText()));
+            video.setPrice(Float.valueOf(jTextField8.getText()));
+            if (videoId == null) {
+                try {
+                    videoDao.createVideo(video);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    video.rental.software.model.Video videoExist = videoDao.findVideoById(Long.valueOf(videoId));
+                    if (videoExist != null) {
+                        videoDao.updateVideo(video);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "      Please Enter All mandatory Fields !     ");
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         JFrame frm2 = new Home();
+        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+        frm2.setSize(1700, 700);
+        frm2.setVisible(true);
+        this.setVisible(false); 
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

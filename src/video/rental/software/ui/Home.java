@@ -265,6 +265,12 @@ public class Home extends javax.swing.JFrame {
 
     private void jButtonVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVideoActionPerformed
         // TODO add your handling code here:
+         JFrame frm2 = new Video();
+        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+        frm2.setSize(1800, 800);
+        frm2.setVisible(true);
+        this.setVisible(false); 
+        this.dispose();
     }//GEN-LAST:event_jButtonVideoActionPerformed
 
     private void JButtonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonUserActionPerformed
@@ -304,6 +310,8 @@ public class Home extends javax.swing.JFrame {
             }
             if (null == gridList || gridList.isEmpty()) {
                 gridList = new ArrayList<>();
+                JOptionPane.showMessageDialog(null, "No result available");
+                return;
             }
 
         } catch (SQLException ex) {
