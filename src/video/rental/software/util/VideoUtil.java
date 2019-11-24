@@ -33,7 +33,10 @@ public class VideoUtil {
         return gridList;
     }
 
-    public static boolean checkNumericString(String inputString) {
+    public static boolean checkMobileNumber(String inputString) {
+        if (inputString == null || inputString.length() != 10) {
+             return false;
+        }
         try {
             Long.parseLong(inputString);
         } catch (Exception e) {

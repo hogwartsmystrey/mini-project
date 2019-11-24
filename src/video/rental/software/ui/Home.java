@@ -10,6 +10,7 @@ import com.mysql.cj.util.StringUtils;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ public class Home extends javax.swing.JFrame {
     private DashBoard dashboard= new DashBoard();
     private CustomerDao customerDao=new CustomerDao();
     private VideoDao videoDao= new VideoDao();
-    List<Grid> gridList;
+    List<Grid> gridList=new ArrayList<>();
 
     /**
      * Creates new form HOMEPAGE
@@ -224,21 +225,27 @@ public class Home extends javax.swing.JFrame {
         try {
             String searchText = jTextFieldSearch.getText();
             List<video.rental.software.model.Video> videoList = null;
+            gridList.clear();
+            dashboard.getVideoList().clear();
 
             if (!StringUtils.isEmptyOrWhitespaceOnly(searchText)) {
-                if (VideoUtil.checkNumericString(searchText)) {
-                    Logger.getLogger(Home.class.getName()).log(Level.INFO,"Inside the Tranasaction search");
+                if (VideoUtil.checkMobileNumber(searchText)) {
+                    Logger.getLogger(Home.class.getName()).log(Level.INFO, "Inside the Tranasaction search");
                     Customer customer = customerDao.findCustomerByMobileNumber(searchText);
-                    gridList = videoDao.findAllVideoTakenByUser(customer.getCustomerId().toString());
+                    if (customer != null) {
+                        gridList = videoDao.findAllVideoTakenByUser(customer.getCustomerId().toString());
+                    }
                 } else {
-                    Logger.getLogger(Home.class.getName()).log(Level.INFO,"Inside the Video search");
+                    Logger.getLogger(Home.class.getName()).log(Level.INFO, "Inside the Video search");
                     videoList = videoDao.findAllVideoByName(searchText);
-                    dashboard.getVideoList().clear();
                     if (null != videoList && !videoList.isEmpty()) {
                         dashboard.getVideoList().addAll(videoList);
                     }
                     gridList = VideoUtil.transformDashBoradToGrid(dashboard);
                 }
+            }
+            if (null == gridList || gridList.isEmpty()) {
+                gridList = new ArrayList<>();
             }
 
         } catch (SQLException ex) {
