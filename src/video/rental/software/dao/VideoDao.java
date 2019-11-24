@@ -5,7 +5,6 @@
  */
 package video.rental.software.dao;
 
-import com.mysql.cj.util.StringUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.config.SqlConnection;
-import static video.rental.software.dao.CustomerDao.logger;
 import video.rental.software.model.Customer;
 import video.rental.software.model.Grid;
 import video.rental.software.model.Video;
@@ -29,7 +27,7 @@ import video.rental.software.model.Video;
 public class VideoDao {
 
     static final Logger logger = Logger.getLogger(CustomerDao.class.getName());
-
+    private CustomerDao customerDao = new CustomerDao();
     private Connection connection;
     private PreparedStatement statement;
     ResultSet resultSet = null;
@@ -147,23 +145,28 @@ public class VideoDao {
         return video;
     }
 
-    public boolean rentVideo(List<Video> videoList, Long userId) throws SQLException {
-        logger.log(Level.INFO, "Inside the rentVideo batch update for user ID {0}", userId);
+    public List<String> rentVideo(List<Grid> gridList, String mobileNumber) throws SQLException {
+        logger.log(Level.INFO, "Inside the rentVideo batch update for user ID {0}", mobileNumber);
+        List<String> errorList = new ArrayList<>();
+        int[] result = null;
+        Customer customer = customerDao.findCustomerByMobileNumber(mobileNumber);
+        if (customer == null) {
+            errorList.add("No Customer exist..Please register to continue");
+            return errorList;
+        }
         String sqlQuery = "insert into video_transaction(video_id,user_id,rent_date,return_status) values (?,?,?,?)";
-        Boolean status = false;
         try {
             statement = connection.prepareStatement(sqlQuery);
 
-            for (Video video : videoList) {
-                statement.setLong(1, video.getVideoId());
-                statement.setLong(2, userId);
+            for (Grid grid : gridList) {
+                statement.setLong(1, Long.parseLong(grid.getVideoId()));
+                statement.setLong(2, customer.getCustomerId());
                 statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
                 statement.setBoolean(4, false);
                 statement.addBatch();
             }
-            int[] result = statement.executeBatch();
-            logger.log(Level.INFO, "The number of rows inserted:{0}", result.length);
-            status = true;
+            result = statement.executeBatch();
+            logger.log(Level.INFO, "The number of rows inserted:{0}", result);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, null, e);
 
@@ -172,7 +175,10 @@ public class VideoDao {
                 statement.close();
             }
         }
-        return status;
+        if (result == null) {
+            errorList.add("Unable to rent the video please try after some time");
+        }
+        return errorList;
     }
     
     

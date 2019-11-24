@@ -8,7 +8,9 @@ package video.rental.software.ui;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import video.rental.software.dao.CustomerDao;
@@ -312,8 +314,6 @@ public class User extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jButtonFetchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFetchActionPerformed
-       
- System.out.println("**************Called ************");
         String mobileNumber = jTextField1.getText();
         if(mobileNumber !=null && !mobileNumber.trim().equals("")){
             try {
@@ -334,22 +334,56 @@ public class User extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-        if (!jTextField1.getText().toString().equalsIgnoreCase("")
-                && !jTextField2.getText().toString().equalsIgnoreCase("")
-                && !jTextField3.getText().toString().equalsIgnoreCase("")
-                && !jTextField4.getText().toString().equalsIgnoreCase("")
-                && !jTextField5.getText().toString().equalsIgnoreCase("")
-                && !jTextField6.getText().toString().equalsIgnoreCase("")
-                && !jTextField7.getText().toString().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(null, "      User details added successfully !     ");
-            JFrame frm2 = new Home();
-            frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
-            frm2.setSize(1700, 700);
-            frm2.setVisible(true);
-            jFrameUser.setVisible(false); 
-            jFrameUser.dispose();
+        if (!jTextField1.getText().equalsIgnoreCase("")
+                && !jTextField3.getText().equalsIgnoreCase("")
+                && !jTextField4.getText().equalsIgnoreCase("")
+                && !jTextField5.getText().equalsIgnoreCase("")
+                && !jTextField6.getText().equalsIgnoreCase("")
+                && !jTextField7.getText().equalsIgnoreCase("")) {
+            try {
+                String mobileNumber = jTextField1.getText();
+                Customer customer = new Customer();
+                customer.setMobileNumber(mobileNumber);
+                customer.setCustomerName(jTextField3.getText());
+                customer.setEmailId(jTextField4.getText());
+                customer.setIdNumber(jTextField5.getText());
+                customer.setIdType(Long.parseLong(jTextField6.getText()));
+                customer.setAddress(jTextField7.getText());
+                Customer customerExist = customerDao.findCustomerByMobileNumber(mobileNumber);
+                if (customerExist == null) {
+                    customer.setCustomerId(customerExist.getCustomerId());
+                    List<String> error = customerDao.updateCustomer(customer);
+                    if (!error.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "      User details update successfully !     ");
+                        JFrame frm2 = new Home();
+                        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+                        frm2.setSize(1700, 700);
+                        frm2.setVisible(true);
+                        jFrameUser.setVisible(false);
+                        jFrameUser.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "      User details update failed !     "); 
+                    }
+                } else {
+                    customer = customerDao.createCustomer(customer);
+                    if (customer.getCustomerId() != null) {
+                        JOptionPane.showMessageDialog(null, "      User details update successfully !     ");
+                        JFrame frm2 = new Home();
+                        frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
+                        frm2.setSize(1700, 700);
+                        frm2.setVisible(true);
+                        jFrameUser.setVisible(false);
+                        jFrameUser.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "      User Creation failed !     "); 
+                    }
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "      Please Enter Mandatory Fields !     ");
+            JOptionPane.showMessageDialog(null, "      Please Enter All mandatory Fields !     ");
         }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
