@@ -355,7 +355,7 @@ public class Home extends javax.swing.JFrame {
         } else if(!"Return".equalsIgnoreCase(searchType)) {
             JOptionPane.showMessageDialog(null, "You have not taken the video for return,Please rent it");
         }else{
-            JFrame frm2 = new RentOut(gridList);
+            JFrame frm2 = new Return(gridList);
             frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
             frm2.setSize(1700, 700);
             frm2.setVisible(true);

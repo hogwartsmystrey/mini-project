@@ -198,7 +198,7 @@ private VideoDao videoDao = new VideoDao();
                 frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
                 frm2.setSize(1700, 700);
                 frm2.setVisible(true);
-                jFrameRentOut.dispose();
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, errors.get(0));
             }
@@ -211,7 +211,7 @@ private VideoDao videoDao = new VideoDao();
         frm2.dispatchEvent(new WindowEvent(frm2, WindowEvent.COMPONENT_SHOWN));
         frm2.setSize(1700, 700);
         frm2.setVisible(true);
-        jFrameRentOut.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     /**

@@ -15,7 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -343,15 +345,13 @@ public class VideoDao {
         return accountId;
     }
     
-    public List<String> calculatePayment(List<Grid> gridList) {
-        List<String> message = new ArrayList<>();
-        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-        StringBuilder messageBuilder = new StringBuilder();
+    public Map<String,String> calculatePayment(List<Grid> gridList) {
+        Map<String,String>paymentMap = new HashMap<>();
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd"); 
         Float totalFees=0F;
         if (null != gridList && !gridList.isEmpty()) {
             for(Grid grid : gridList) {
                 long duration = 0;
-                messageBuilder.setLength(0);
                 try {
                     String hireDate = myFormat.format(grid.getRentedDate());
                     Date date1 = myFormat.parse(hireDate);
@@ -363,18 +363,19 @@ public class VideoDao {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Float calcualtedFee = Float.parseFloat(grid.getPrice()) * duration;
-                logger.log(Level.INFO, "Calculate fee for Video {0}", grid.getVideoId());
-                logger.log(Level.INFO, "Calcualted Fee************ ", calcualtedFee);
-                messageBuilder.append("Fee for the video '").append(grid.getVideoName()).append("' with ID '").append(grid.getVideoId()).append("' is ").append(String.valueOf(calcualtedFee)).append(" (").append(grid.getPrice()).append(" * ").append(duration).append(" )");
+                Float calcualtedFee;
+                if (duration == 0) {
+                    calcualtedFee = Float.parseFloat(grid.getPrice()) * 1;
+                } else {
+                    calcualtedFee = Float.parseFloat(grid.getPrice()) * duration;
+                }
+                String value =calcualtedFee.toString()+":"+duration;
+                paymentMap.put(grid.getVideoId(), value);
                 totalFees = totalFees + calcualtedFee;
-                message.add(messageBuilder.toString());
             }
-            messageBuilder.setLength(0);
-            messageBuilder.append("Total payable amount in cash is RS ").append(totalFees);
-            message.add(messageBuilder.toString());
+            paymentMap.put("Total", totalFees.toString());
         }
-        return message;
+        return paymentMap;
     }
     
     
