@@ -5,6 +5,8 @@
  */
 package video.rental.software.model;
 
+import java.util.Date;
+
 /**
  *
  * @author vimal
@@ -12,11 +14,14 @@ package video.rental.software.model;
 public class Grid {
     
     private boolean select;
+    private String tranactionId;
     private String videoId;
     private String videoName;
     private String authorName;
     private String mobileNumber;
     private String userName;
+    private String price;
+    private Date rentedDate;
 
     public boolean isSelect() {
         return select;
@@ -24,6 +29,14 @@ public class Grid {
 
     public void setSelect(boolean select) {
         this.select = select;
+    }
+
+    public String getTranactionId() {
+        return tranactionId;
+    }
+
+    public void setTranactionId(String tranactionId) {
+        this.tranactionId = tranactionId;
     }
 
     public String getVideoId() {
@@ -42,6 +55,14 @@ public class Grid {
         this.videoName = videoName;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
     public String getMobileNumber() {
         return mobileNumber;
     }
@@ -58,19 +79,29 @@ public class Grid {
         this.userName = userName;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getPrice() {
+        return price;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public Date getRentedDate() {
+        return rentedDate;
+    }
+
+    public void setRentedDate(Date rentedDate) {
+        this.rentedDate = rentedDate;
     }
 
     @Override
     public String toString() {
-        return "Grid{" + "select=" + select + ", videoId=" + videoId + ", videoName=" + videoName + ", mobileNumber=" + mobileNumber + ", userName=" + userName + '}';
+        return "Grid{" + "select=" + select + ", tranactionId=" + tranactionId + ", videoId=" + videoId + ", videoName=" + videoName + ", authorName=" + authorName + ", mobileNumber=" + mobileNumber + ", userName=" + userName + ", price=" + price + ", rentedDate=" + rentedDate + '}';
     }
-    
-    
+
+   
+
+  
     
 }

@@ -11,8 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.config.SqlConnection;
@@ -181,12 +185,25 @@ public class VideoDao {
         return errorList;
     }
     
+     public List<String> returnVideo(List<Grid> gridList) throws SQLException {
+        logger.log(Level.INFO, "Inside the returnVideo");
+        for(Grid grid:gridList){
+            markAsReturn(Long.parseLong(grid.getTranactionId()));
+            try {
+                createAccount(grid);
+            } catch (ParseException ex) {
+                Logger.getLogger(VideoDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;      
+    }
+    
     
     public List<Grid> findAllVideoTakenByUser(String userId) throws SQLException {
         logger.log(Level.INFO, "Inside findAllVideoTakenByUser {0}", userId);
         List<Grid> gridList = new ArrayList<>();
         Grid grid;
-        String query = "select vd.video_id,vd.video_name,vd.author_name from video vd,video_transaction tx where vd.video_id=tx.video_id and tx.user_id=?";
+        String query = "select vd.video_id,vd.video_name,vd.author_name,tx.transaction_id,tx.rent_date,vd.price from video vd,video_transaction tx where vd.video_id=tx.video_id and tx.user_id=? and tx.return_status=0";
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, userId);
@@ -198,6 +215,9 @@ public class VideoDao {
                 grid.setVideoId(String.valueOf(videoId));
                 grid.setVideoName(resultSet.getString("video_name"));
                 grid.setAuthorName(resultSet.getString("author_name"));
+                grid.setTranactionId(String.valueOf(resultSet.getLong("transaction_id")));
+                grid.setRentedDate(resultSet.getDate("rent_date"));
+                grid.setPrice(String.valueOf(resultSet.getFloat("price")));
                 gridList.add(grid);
             }
         } catch (SQLException ex) {
@@ -243,6 +263,81 @@ public class VideoDao {
             }
         }
         return status;
+    }
+    
+     public Boolean markAsReturn(Long tranactionId) throws SQLException {
+        logger.log(Level.INFO, "Inside markAsReturn {0}", tranactionId);
+        boolean status = true;
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE video_transaction SET return_status=1 where transaction_id=?");
+        try {
+            statement = connection.prepareStatement(query.toString());
+            statement.setLong(1, tranactionId);
+            int numRowsAffected = statement.executeUpdate();
+            logger.log(Level.INFO, "No records created {0}", numRowsAffected);
+
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
+            status =false;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+        return status;
+    }
+    public Long createAccount(Grid grid) throws SQLException, ParseException {
+        logger.log(Level.INFO, "Inside createAccount {0}", grid);
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        long duration = 0;
+        try {
+            String hireDate = myFormat.format(grid.getRentedDate());
+            Date date1=myFormat.parse(hireDate);
+            String currentDate = myFormat.format(new Date());
+            Date date2= myFormat.parse(currentDate);
+            long diff = date2.getTime() - date1.getTime();
+            duration= TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+          
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Float calcualtedFee = Float.parseFloat(grid.getPrice())*duration;       
+         logger.log(Level.INFO, "Calculate fee for Video {0}", grid.getVideoId());
+        logger.log(Level.INFO, "Calcualted Fee************ ", calcualtedFee);
+        Long accountId = null;
+
+        String query = "INSERT INTO video_account(transaction_id,amount_received,date) VALUES (?,?,?)";
+        int numRowsAffected = 0;
+        try {
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, grid.getTranactionId());
+            statement.setFloat(2, calcualtedFee);
+            statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+            numRowsAffected = statement.executeUpdate();
+            logger.log(Level.INFO, "No records created {0}", numRowsAffected);
+            try (ResultSet rs = statement.getGeneratedKeys()) {
+                if (rs.next()) {
+                    accountId = rs.getLong(1);
+                }
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, null, s);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+
+        return accountId;
     }
     
     
