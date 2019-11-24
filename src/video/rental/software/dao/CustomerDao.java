@@ -55,6 +55,7 @@ public class CustomerDao {
                 customer.setEmailId(resultSet.getString("email_id"));
                 customer.setIdType(resultSet.getLong("id_type"));
                 customer.setIdNumber(resultSet.getString("id_number"));
+                customer.setAddress(resultSet.getString("address"));
 
             }
         } catch (SQLException ex) {
