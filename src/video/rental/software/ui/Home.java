@@ -110,9 +110,13 @@ public class Home extends javax.swing.JFrame {
         JButtonUser.setBackground(new java.awt.Color(255, 255, 255));
         JButtonUser.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         JButtonUser.setForeground(new java.awt.Color(51, 153, 255));
+        JButtonUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transUser.jpg"))); // NOI18N
         JButtonUser.setText("User");
-        JButtonUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        JButtonUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        JButtonUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        JButtonUser.setMargin(new java.awt.Insets(2, 0, 2, 14));
         JButtonUser.setPreferredSize(new java.awt.Dimension(67, 51));
+        JButtonUser.setVerifyInputWhenFocusTarget(false);
         JButtonUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JButtonUserActionPerformed(evt);
@@ -122,8 +126,11 @@ public class Home extends javax.swing.JFrame {
         jButtonVideo.setBackground(new java.awt.Color(255, 255, 255));
         jButtonVideo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonVideo.setForeground(new java.awt.Color(51, 153, 255));
+        jButtonVideo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transVideo.jpg"))); // NOI18N
         jButtonVideo.setText("Video");
-        jButtonVideo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonVideo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonVideo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonVideo.setMargin(new java.awt.Insets(2, 0, 2, 14));
         jButtonVideo.setPreferredSize(new java.awt.Dimension(67, 51));
         jButtonVideo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +150,11 @@ public class Home extends javax.swing.JFrame {
         jButtonSearch.setBackground(new java.awt.Color(255, 255, 255));
         jButtonSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonSearch.setForeground(new java.awt.Color(51, 153, 255));
+        jButtonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transSerch.jpg"))); // NOI18N
         jButtonSearch.setText("Search");
+        jButtonSearch.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonSearch.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonSearch.setMargin(new java.awt.Insets(2, 0, 2, 0));
         jButtonSearch.setNextFocusableComponent(jTableGrid);
         jButtonSearch.setPreferredSize(new java.awt.Dimension(61, 51));
         jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +166,10 @@ public class Home extends javax.swing.JFrame {
         jButtonRent.setBackground(new java.awt.Color(255, 255, 255));
         jButtonRent.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonRent.setForeground(new java.awt.Color(51, 153, 255));
+        jButtonRent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transRen.jpg"))); // NOI18N
         jButtonRent.setText("Rent");
+        jButtonRent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonRent.setMargin(new java.awt.Insets(2, 0, 2, 14));
         jButtonRent.setPreferredSize(new java.awt.Dimension(61, 51));
         jButtonRent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +180,10 @@ public class Home extends javax.swing.JFrame {
         jButtonReturn.setBackground(new java.awt.Color(255, 255, 255));
         jButtonReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonReturn.setForeground(new java.awt.Color(51, 153, 255));
+        jButtonReturn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/video/rental/software/ui/transReturn.jpg"))); // NOI18N
         jButtonReturn.setText("Return");
+        jButtonReturn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButtonReturn.setMargin(new java.awt.Insets(2, 0, 2, 0));
         jButtonReturn.setPreferredSize(new java.awt.Dimension(67, 51));
         jButtonReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,13 +200,13 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addComponent(jButtonRent, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jButtonReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(45, 45, 45)
                 .addComponent(JButtonUser, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(35, 35, 35)
                 .addComponent(jButtonVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(80, 80, 80))
         );
@@ -225,7 +242,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
