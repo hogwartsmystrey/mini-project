@@ -320,6 +320,7 @@ public class User extends javax.swing.JFrame {
                 Customer customer = customerDao.findCustomerByMobileNumber(mobileNumber);
                 if(customer == null){
                     JOptionPane.showMessageDialog(null, "No customer exist with the Mobile Number");
+                    return;
                 }
                 jTextField2.setText(customer.getCustomerId().toString());
                 jTextField3.setText(customer.getCustomerName());
