@@ -43,19 +43,19 @@ CREATE TABLE `video` (
   PRIMARY KEY (`transaction_id`));
   
   CREATE TABLE `video_account` (
-  `video_account_id` int(11) NOT NULL ,
+  `video_account_id` int(11) NOT NULL AUTO_INCREMENT ,
   `transaction_id` int(11) NOT NULL ,
   `amount_received` decimal(9) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`video_account_id`));
   
   CREATE TABLE `video_language` (
-  `language_id` int(11) NOT NULL ,
+  `language_id` int(11) NOT NULL AUTO_INCREMENT,
   `name`  varchar(20) not null,
   PRIMARY KEY (`language_id`));
  
   CREATE TABLE `kyc` (
-  `kyc_id` varchar(9) NOT NULL ,
+  `kyc_id` int(11) NOT NULL AUTO_INCREMENT,
   `kyc_type` varchar(11) NOT NULL ,
   PRIMARY KEY (`kyc_id`));
 

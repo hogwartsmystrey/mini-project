@@ -5,6 +5,7 @@
  */
 package video.rental.software.dao;
 
+import com.mysql.cj.util.StringUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,9 +17,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import video.rental.software.config.SqlConnection;
+import static video.rental.software.dao.CustomerDao.logger;
+import video.rental.software.model.Customer;
 import video.rental.software.model.Grid;
 import video.rental.software.model.Video;
-import video.rental.software.model.VideoTranaction;
 
 /**
  *
@@ -205,5 +207,37 @@ public class VideoDao {
         logger.log(Level.INFO, "findAllVideoTakenByUser transaction List ", gridList);
         return gridList;
     }
+    
+    public Boolean updateVideo(Video video) throws SQLException {
+        logger.log(Level.INFO, "Inside createCustomer {0}", video);
+        boolean status = true;
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE video SET video_name=?,author_name=?,quantity=?,published_year=?,type=?,price=? where video_id=?");
+        try {
+            statement = connection.prepareStatement(query.toString());
+            statement.setString(1, video.getVideoName());
+            statement.setString(2, video.getAuthorName());
+            statement.setInt(3, video.getQuantity());
+            statement.setInt(4, video.getPublishedYear());
+            statement.setLong(5, video.getVideoType());
+            statement.setFloat(6, video.getPrice());
+            statement.setLong(7, video.getVideoId());
+            int numRowsAffected = statement.executeUpdate();
+            logger.log(Level.INFO, "No records created {0}", numRowsAffected);
+
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, null, ex);
+            status =false;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+        return status;
+    }
+    
     
 }
