@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  * @author anjana sree
  */
 public class Video extends javax.swing.JFrame {
- private static JFrame jFrameVideo;
+    private static JFrame jFrameVideo;
     /**
      * Creates new form VIDEO
      */
@@ -125,7 +125,6 @@ public class Video extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setForeground(new java.awt.Color(51, 153, 255));
         jButton1.setText("Save");
-        jButton1.setActionCommand("Save");
         jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,7 +144,6 @@ public class Video extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setForeground(new java.awt.Color(51, 153, 255));
         jButton3.setText("Cancel");
-        jButton3.setActionCommand("Cancel");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
