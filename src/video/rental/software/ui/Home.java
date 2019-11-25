@@ -312,7 +312,7 @@ public class Home extends javax.swing.JFrame {
             if (null == gridList || gridList.isEmpty()) {
                 gridList = new ArrayList<>();
                 JOptionPane.showMessageDialog(null, "No result available");
-                return;
+               
             }
 
         } catch (SQLException ex) {
