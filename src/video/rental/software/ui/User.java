@@ -77,6 +77,7 @@ public class User extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1700, 800));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1700, 700));
@@ -290,7 +291,7 @@ public class User extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -427,11 +428,11 @@ public class User extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 javax.swing.JPanel panel = new javax.swing.JPanel();
-                panel.setPreferredSize(new Dimension(1700, 700));
+                panel.setPreferredSize(new Dimension(1700, 900));
                 jFrameUser = new User();
                 jFrameUser.add(panel);
                 jFrameUser.pack();
-                jFrameUser.setMaximumSize(new Dimension(1700, 700));                         
+                jFrameUser.setMaximumSize(new Dimension(1700, 900));                         
                 jFrameUser.setResizable(false);
                 jFrameUser.setVisible(true);
                
