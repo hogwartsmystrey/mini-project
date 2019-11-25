@@ -7,7 +7,7 @@ package video.rental.software.ui;
 
 /**
  *
- * @author anjana sree
+ * @author anjana
  */
 public class VIDEORENTALSOFTWARE {
 

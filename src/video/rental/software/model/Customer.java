@@ -7,7 +7,7 @@ package video.rental.software.model;
 
 /**
  *
- * @author pvr2
+ * @author anjana
  */
 public class Customer {
     private Long customerId;

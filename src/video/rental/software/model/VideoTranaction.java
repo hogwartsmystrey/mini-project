@@ -7,7 +7,7 @@ package video.rental.software.model;
 
 /**
  *
- * @author anjana sree
+ * @author anjana
  */
 public class VideoTranaction {
     

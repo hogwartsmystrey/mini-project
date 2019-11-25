@@ -9,13 +9,10 @@ import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 /**
  *
- * @author anjana sree
- */
+ * @author anjana */
 public class Login extends javax.swing.JFrame {
    private static javax.swing.JFrame jFrameLogin;
     /**

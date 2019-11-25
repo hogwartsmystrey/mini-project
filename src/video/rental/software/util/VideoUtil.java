@@ -13,7 +13,7 @@ import video.rental.software.model.Video;
 
 /**
  *
- * @author vimal
+ * @author anjana
  */
 public class VideoUtil {
 

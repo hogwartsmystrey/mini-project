@@ -16,7 +16,7 @@ import video.rental.software.dao.VideoDao;
 
 /**
  *
- * @author anjana sree
+ * @author anjana
  */
 public class Video extends javax.swing.JFrame {
     private static JFrame jFrameVideo;
@@ -348,9 +348,7 @@ public class Video extends javax.swing.JFrame {
 
             video.rental.software.model.Video video = new video.rental.software.model.Video();
             String videoId = jTextField1.getText();
-            if (videoId != null) {
-                video.setVideoId(Long.getLong(videoId));
-            }
+
             video.setVideoName(jTextField2.getText());
             video.setAuthorName(jTextField3.getText());
             video.setQuantity(Integer.valueOf(jTextField4.getText()));
@@ -360,25 +358,38 @@ public class Video extends javax.swing.JFrame {
             video.setPrice(Float.valueOf(jTextField8.getText()));
             if (videoId == null) {
                 try {
-                    videoDao.createVideo(video);
+                    video = videoDao.createVideo(video);
                 } catch (SQLException ex) {
                     Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Video creation failed");
+                }
+                if (video.getVideoId() != null) {
+                    JOptionPane.showMessageDialog(null, "New Video created on the store,you can search by the name");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Video creation failed");
                 }
             } else {
                 try {
                     video.rental.software.model.Video videoExist = videoDao.findVideoById(Long.valueOf(videoId));
-                    if (videoExist != null) {
-                        videoDao.updateVideo(video);
+                    if (videoExist == null) {
+                        JOptionPane.showMessageDialog(null, "Please remove video ID for saving the new video");
+                    } else {
+                        boolean status = videoDao.updateVideo(video);
+                        if (status) {
+                            JOptionPane.showMessageDialog(null, "Video details update sucessfully");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Video Update failed");
+                        }
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Video Update failed");
                 }
             }
 
         } else {
             JOptionPane.showMessageDialog(null, "      Please Enter All mandatory Fields !     ");
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -427,7 +438,7 @@ public class Video extends javax.swing.JFrame {
                 jFrameVideo.add(panel);
                 jFrameVideo.pack();
                 jFrameVideo.setMaximumSize(new Dimension(1700, 800));                         
-                jFrameVideo.setResizable(false);
+                jFrameVideo.setResizable(true);
                 jFrameVideo.setVisible(true);
                
             }

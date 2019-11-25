@@ -20,7 +20,7 @@ import video.rental.software.model.Customer;
 
 /**
  *
- * @author pvr2
+ * @author anjana
  */
 public class CustomerDao {
 

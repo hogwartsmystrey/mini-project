@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author vimal
+ * @author anjana
  */
 public class SqlConnection {
 

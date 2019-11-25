@@ -26,7 +26,7 @@ import video.rental.software.util.VideoUtil;
 
 /**
  *
- * @author anjana sree
+ * @author anjana
  */
 public class Home extends javax.swing.JFrame {
     private static JFrame jFrameHome;

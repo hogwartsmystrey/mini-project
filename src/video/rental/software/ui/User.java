@@ -18,7 +18,7 @@ import video.rental.software.model.Customer;
 
 /**
  *
- * @author anjana sree
+ * @author anjana
  */
 public class User extends javax.swing.JFrame {
      private static JFrame jFrameUser;

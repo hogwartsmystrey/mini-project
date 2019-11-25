@@ -18,7 +18,7 @@ import video.rental.software.model.Grid;
 
 /**
  *
- * @author pvr2
+ * @author anjana
  */
 public class RentOut extends javax.swing.JFrame {
 private static JFrame jFrameRentOut;
