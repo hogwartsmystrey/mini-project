@@ -57,11 +57,13 @@ public class VideoDao {
 
             while (resultSet.next()) {
                 video.setVideoId(resultSet.getLong("video_id"));
+                video.setVideoName(resultSet.getString("video_name"));
                 video.setAuthorName(resultSet.getString("author_name"));
                 video.setQuantity(resultSet.getInt("quantity"));
                 video.setLanguage(resultSet.getString("language"));
                 video.setVideoType(resultSet.getLong("type"));
                 video.setPrice(resultSet.getFloat("price"));
+                video.setPublishedYear(resultSet.getInt("published_year"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(VideoDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,15 +120,17 @@ public class VideoDao {
 
     public Video createVideo(Video video) throws SQLException {
         logger.log(Level.INFO, "Inside createCustomer {0}", video);
-        String query = "INSERT INTO video(author_name,quantity,published_year,language,type,price) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO video(video_name,author_name,quantity,published_year,language,type,price) VALUES (?,?,?,?,?,?,?)";
         int numRowsAffected = 0;
         try {
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, video.getAuthorName());
-            statement.setInt(2, video.getQuantity());
-            statement.setInt(3, video.getPublishedYear());
-            statement.setLong(4, video.getVideoType());
-            statement.setFloat(5, video.getPrice());
+            statement.setString(1, video.getVideoName());
+            statement.setString(2, video.getAuthorName());
+            statement.setInt(3, video.getQuantity());
+            statement.setInt(4, video.getPublishedYear());
+            statement.setString(5, video.getLanguage());
+            statement.setLong(6, video.getVideoType());
+            statement.setFloat(7, video.getPrice());
 
             numRowsAffected = statement.executeUpdate();
             logger.log(Level.INFO, "No records created {0}", numRowsAffected);
