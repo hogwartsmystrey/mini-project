@@ -9,19 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import video.rental.software.dao.CustomerDao;
 import video.rental.software.dao.VideoDao;
-import video.rental.software.model.Grid;
-import video.rental.software.model.Video;
+import video.rental.software.model.Customer;
 
 /**
  *
- * @author vimal
+ * @author anjana
  */
 public class Db_test {
 
@@ -36,18 +30,26 @@ public class Db_test {
         ResultSet resultSet = null;
         CustomerDao customerDao = new CustomerDao();
         VideoDao videodao = new VideoDao();
-
+        Customer cust =customerDao.findCustomerById(1L);
+        System.out.println("Customer Email before update****"+cust.getEmailId());
+        cust.setEmailId(cust.getEmailId()+"_1");
+        customerDao.updateCustomer(cust);
+        cust =customerDao.findCustomerById(1L);
+        System.out.println("Customer Email After update****"+cust.getEmailId());
 //        Video video = videodao.findVideoById(1L);
 //        List<Video> videoList = new ArrayList<>();
 //        videoList.add(video);
        // Boolean status = videodao.rentVideo(videoList, 1L);
         //System.out.println("Transaction status is " + status);
-        List<Grid> gridList;
-        gridList = videodao.findAllVideoTakenByUser("1");
-        System.out.println("Grid List" + gridList.size());
-        //for(Grid grid:gridList){
-        videodao.returnVideo(gridList);
-        
+//        List<Grid> gridList;
+//        gridList = videodao.findAllVideoTakenByUser("1");
+//        System.out.println("Grid List" + gridList.size());
+//        //for(Grid grid:gridList){
+//        //videodao.returnVideo(gridList);
+//        List<String>messages = videodao.calculatePayment(gridList);
+//        for(String s:messages ){
+//            System.out.println("Message ::"+s);
+//        }
 
 //        customer.setMobileNumber("9551122222");
 //        customer.setEmailId("test@gmail.com");
