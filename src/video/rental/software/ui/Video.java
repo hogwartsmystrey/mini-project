@@ -356,7 +356,7 @@ public class Video extends javax.swing.JFrame {
             video.setLanguage(jTextField6.getText());
             video.setVideoType(Long.valueOf(jTextField7.getText()));
             video.setPrice(Float.valueOf(jTextField8.getText()));
-            if (videoId == null) {
+            if (videoId == null || "".equalsIgnoreCase(videoId)) {
                 try {
                     video = videoDao.createVideo(video);
                 } catch (SQLException ex) {
@@ -374,6 +374,7 @@ public class Video extends javax.swing.JFrame {
                     if (videoExist == null) {
                         JOptionPane.showMessageDialog(null, "Please remove video ID for saving the new video");
                     } else {
+                        video.setVideoId(videoExist.getVideoId());
                         boolean status = videoDao.updateVideo(video);
                         if (status) {
                             JOptionPane.showMessageDialog(null, "Video details update sucessfully");
