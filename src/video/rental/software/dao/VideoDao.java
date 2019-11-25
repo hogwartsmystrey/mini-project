@@ -48,7 +48,7 @@ public class VideoDao {
 
     public Video findVideoById(Long videoId) throws SQLException {
         logger.log(Level.INFO, "Inside findVideoById {0}", videoId);
-        Video video = new Video();
+        Video video = null;
         String query = "select * from video vd where vd.video_id=?";
         try {
             statement = connection.prepareStatement(query);
@@ -56,6 +56,7 @@ public class VideoDao {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                video = new Video();
                 video.setVideoId(resultSet.getLong("video_id"));
                 video.setVideoName(resultSet.getString("video_name"));
                 video.setAuthorName(resultSet.getString("author_name"));
